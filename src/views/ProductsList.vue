@@ -21,6 +21,9 @@ export default {
   components: {
     ProductItem,
   },
+  mounted() {
+    this.$store.dispatch('prods/loadProducts');
+  },
   computed: {
     ...mapGetters('prods', ['productsList']),
   }

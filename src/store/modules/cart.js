@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
     namespaced: true,
     state() {
@@ -40,11 +42,21 @@ export default {
         },
     },
     actions: {
-        addToCart(context, payload) {
+        async addToCart(context, payload) {
             const prodId = payload.id;
-            const products = context.rootGetters['prods/productsList'];
-            const product = products.find(prod => prod.id === prodId);
-            context.commit('addProductToCart', product);
+
+            // const products = context.rootGetters['prods/productsList'];
+            // const product = products.find(prod => prod.id === prodId);
+            // context.commit('addProductToCart', product);
+
+            try {
+                const {
+                    data
+                } = await axios.get(`http://localhost:3000/products/${prodId}`);
+                context.commit('addProductToCart', data);
+            } catch (error) {
+                console.log(error.message);
+            }
         },
         removeFromCart(context, payload) {
             context.commit('removeProductFromCart', payload);
