@@ -1,4 +1,4 @@
-import axios from 'axios';
+import instance from '../../services/AxiosServices';
 
 export default {
     namespaced: true,
@@ -52,7 +52,7 @@ export default {
             try {
                 const {
                     data
-                } = await axios.get(`http://localhost:3000/products/${prodId}`);
+                } = await instance.get(`products/${prodId}`);
                 context.commit('addProductToCart', data);
             } catch (error) {
                 console.log(error.message);
